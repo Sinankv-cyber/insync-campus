@@ -1,0 +1,16 @@
+{
+  "name": "InSync.",
+  "short_name": "InSync",
+  "description": "Everything in sync. Attendance and phone custody for residential colleges — QR or typed code, confirmed by staff.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#071328",
+  "theme_color": "#0b1b36",
+  "icons": [
+    { "src": "/brand-icon/192", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand-icon/512", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brand-icon/maskable", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

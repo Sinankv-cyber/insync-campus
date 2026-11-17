@@ -1,0 +1,20 @@
+// Midnight / timezone checks for schedule maths. Run: npx tsx scripts/schedule-test.ts
+import { cycleBounds, currentCycleDate, zonedToUtc } from "../src/lib/schedule";
+let ok = 0, bad = 0;
+const eq = (name: string, a: unknown, b: unknown) => { const p = JSON.stringify(a) === JSON.stringify(b); p ? ok++ : bad++; console.log(`${p ? "PASS" : "FAIL"}  ${name}${p ? "" : `  got ${JSON.stringify(a)} want ${JSON.stringify(b)}`}`); };
+const P = { use_start: "18:00", use_end: "21:00", grace_minutes: 5, timezone: "Asia/Kolkata" };
+eq("18:00 IST = 12:30Z", zonedToUtc("2026-11-17", "18:00", "Asia/Kolkata").toISOString(), "2026-11-17T12:30:00.000Z");
+const b = cycleBounds("2026-11-17", P);
+eq("deadline 21:05 IST = 15:35Z", b.deadline.toISOString(), "2026-11-17T15:35:00.000Z");
+const M = { use_start: "22:00", use_end: "01:00", grace_minutes: 10, timezone: "Asia/Kolkata" };
+const m = cycleBounds("2026-11-17", M);
+eq("midnight window ends next day 01:00 IST", m.windowEnd.toISOString(), "2026-11-17T19:30:00.000Z");
+eq("midnight deadline 01:10 IST next day", m.deadline.toISOString(), "2026-11-17T19:40:00.000Z");
+eq("00:30 IST belongs to previous day's cycle", currentCycleDate(new Date("2026-11-17T19:00:00Z"), M), "2026-11-17");
+eq("01:30 IST moves to today's cycle", currentCycleDate(new Date("2026-11-17T20:00:00Z"), M), "2026-11-18");
+eq("10:00 IST uses today's (upcoming) cycle", currentCycleDate(new Date("2026-11-18T04:30:00Z"), P), "2026-11-18");
+eq("23:00 IST still today's (overdue) cycle", currentCycleDate(new Date("2026-11-18T17:30:00Z"), P), "2026-11-18");
+eq("00:30 IST after normal window -> new date's cycle", currentCycleDate(new Date("2026-11-18T19:00:00Z"), P), "2026-11-19");
+eq("year boundary 31 Dec 23:30 -> 01:00 window", cycleBounds("2026-12-31", { ...M, use_start: "23:30" }).windowEnd.toISOString(), "2026-12-31T19:30:00.000Z");
+console.log(`\n${ok} passed, ${bad} failed`);
+process.exit(bad ? 1 : 0);

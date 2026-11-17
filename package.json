@@ -1,0 +1,46 @@
+{
+  "name": "insync",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3333 --hostname localhost",
+    "build": "next build",
+    "start": "next start --port 3333",
+    "lint": "eslint",
+    "db:migrate": "tsx --env-file=.env.local --conditions=react-server scripts/db.ts migrate",
+    "db:seed": "tsx --env-file=.env.local --conditions=react-server scripts/db.ts seed",
+    "db:check": "tsx --env-file=.env.local --conditions=react-server scripts/db.ts check",
+    "db:rebrand": "tsx --env-file=.env.local --conditions=react-server scripts/db.ts rebrand"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.2.3",
+    "arctic": "^3.7.0",
+    "bcryptjs": "^3.0.3",
+    "iron-session": "^9.1.0",
+    "jsqr": "^1.4.0",
+    "lucide-react": "^1.74.0",
+    "next": "^16.4.6",
+    "pg": "^8.23.1",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "server-only": "^0.0.1",
+    "web-push": "^4.0.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^26.6.6",
+    "@types/pg": "^8.23.1",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/web-push": "^3.6.4",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  }
+}
